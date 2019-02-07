@@ -33,7 +33,8 @@ class Theremin {
     this.detune.offset.value = 0;
     this.detuneFilter = this.ac.createBiquadFilter();
     this.detuneFilter.type = 'lowpass';
-    this.detuneFilter.frequency.value = 50;
+    this.detuneFilter.frequency.value = 20;
+    this.detuneFilter.Q.value = 0;
     this.detune.connect(this.detuneFilter);
     this.osc = this.ac.createOscillator();
     this.osc.frequency.value = FreqBase;
@@ -43,6 +44,7 @@ class Theremin {
     this.volumeFilter = this.ac.createBiquadFilter();
     this.volumeFilter.type = 'lowpass';
     this.volumeFilter.frequency.value = 50;
+    this.volumeFilter.Q.value = 0;
     this.volume.connect(this.volumeFilter);
     this.gain = this.ac.createGain();
     this.volumeFilter.connect(this.gain.gain);
@@ -54,6 +56,7 @@ class Theremin {
     this.volume.start();
     this.osc.start();
     this.$element.on('mousemove', (event) => this.mouseMove(event));
+    console.log(this.detuneFilter);
   }
 
   mute(muted = true) {
