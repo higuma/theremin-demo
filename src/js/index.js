@@ -4,19 +4,37 @@ import '../scss/style.scss';
 // Use jQuery
 import $ from 'jquery';
 
-/*
-Oscillator frequency is scale by note pitch (not by frequency).
-Its pitch is manupulated by .detune
-(.frequency is fixed to C3(48) = 130.81[Hz])
-It is mapped to the theremin pad element width.
+/***********************************************************************
+DIAGRAM
+-------
+                           Oscillator
+                           +------------+
+                           |osc         |
+                           |            |
+Constant    BiquadFilter   | AudioParam |
++------+   +------------+  | +-------+  |   Gain
+|detune|-->|detuneFilter|--->|.detune|  |   +------------+
++------+   +------------+  | +-------+  |-->|gain        |
+                           +------------+   |            |
+Constant    BiquadFilter                    | AudioParam |
++------+   +------------+                   | +-------+  |   AudioDestination
+|volume|-->|volumeFilter|-------------------->| .gain |  |   +-----------+
++------+   +------------+                   | +-------+  |-->|destination|
+                                            +------------+   +-----------+
 
-Sound volume is scaled to the simple quadratic function (x**2).
-It is mapped to the element height.
-*/
+Oscillator frequency is scaled by note pitch,
+which is manupulated by osc.detune.
+(where osc.frequency is fixed to C3(48) = 130.81[Hz])
+It is mapped to the mouse X coordinate of the theremin pad element.
+
+Sound volume is scaled by the quadratic function y**2,
+which is mapped to the mouse Y coordinate of the element.
+
+***********************************************************************/
 
 // Oscillator constants
 // --------------------
-const FreqBase = 130.81,    // Lowest frequency = MIDI A3(48)
+const FreqBase = 130.81,    // Lowest frequency = MIDI C3(48)
       DetuneWidth = 3600;   // 3 octaves
 
 // Simple Theremin with Web Audio API
@@ -56,7 +74,6 @@ class Theremin {
     this.volume.start();
     this.osc.start();
     this.$element.on('mousemove', (event) => this.mouseMove(event));
-    console.log(this.detuneFilter);
   }
 
   mute(muted = true) {
