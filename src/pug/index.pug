@@ -1,0 +1,19 @@
+mixin link(url)
+  a(href=url target="_blank" rel="noopener noreferrer")
+    block
+
+doctype html
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
+    title Theremin Playable Webapp Demo
+  body
+    div.container
+      h1.display-4 Theremin Demo
+        button.btn.btn-secondary.ml-4#start-button Start
+        +link("https://github.com/higuma/theremin-demo")
+          img.mt-4.float-right(src="img/GitHub-Mark-32px.png" alt="GitHub logo 32x32")
+      div.row
+        div.col
+          canvas#theremin-pad(width="940" height="320") This page requires HTML canvas

@@ -1,0 +1,19 @@
+// Import Bootstrap by partials: required
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+// import minimum partials used for this page
+@import "~bootstrap/scss/root";
+@import "~bootstrap/scss/reboot";
+@import "~bootstrap/scss/type";
+@import "~bootstrap/scss/grid";
+@import "~bootstrap/scss/buttons";
+@import "~bootstrap/scss/images";
+@import "~bootstrap/scss/utilities/float";
+@import "~bootstrap/scss/utilities/spacing";
+
+// Custom style
+#theremin-pad {
+  cursor: crosshair;
+}
