@@ -64,8 +64,6 @@ class Theremin {
     let aCtx = new (window.AudioContext || window.webkitAudioContext),
         $element = $(selector);
     this.element = $element[0];
-    this.width = this.element.clientWidth;
-    this.height = this.element.clientHeight;
     this.detune = aCtx.createConstantSource();
     let detuneFilter = aCtx.createBiquadFilter();
     detuneFilter.type = 'lowpass';
@@ -126,9 +124,9 @@ class Theremin {
   mouseMove(event) {
     if (this.muted) return;
     let rect = this.element.getBoundingClientRect();
-    this.dx = (event.clientX - rect.left) / this.width;
+    this.dx = (event.clientX - rect.left) / this.element.clientWidth;
     this.updateVolume();
-    this.dy = (event.clientY - rect.top) / this.height;
+    this.dy = (event.clientY - rect.top) / this.element.clientHeight;
     this.updateNote();
   }
 }
