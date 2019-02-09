@@ -9,11 +9,12 @@
 @import "~bootstrap/scss/type";
 @import "~bootstrap/scss/grid";
 @import "~bootstrap/scss/buttons";
+@import "~bootstrap/scss/button-group";
 @import "~bootstrap/scss/images";
 @import "~bootstrap/scss/utilities/float";
 @import "~bootstrap/scss/utilities/spacing";
 
-// Custom style
-#theremin-pad {
+// custom style
+#instrument {
   cursor: crosshair;
 }
