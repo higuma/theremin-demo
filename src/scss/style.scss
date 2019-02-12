@@ -1,20 +1,37 @@
+// Kill CSS transitions for quick response
+$enable-transitions: false;
+
 // Import Bootstrap by partials: required
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/mixins";
 
-// import minimum partials used for this page
+// Import minimum partials used for this page
 @import "~bootstrap/scss/root";
 @import "~bootstrap/scss/reboot";
 @import "~bootstrap/scss/type";
 @import "~bootstrap/scss/grid";
 @import "~bootstrap/scss/buttons";
-@import "~bootstrap/scss/button-group";
 @import "~bootstrap/scss/images";
+@import "~bootstrap/scss/progress";
+@import "~bootstrap/scss/utilities/display";
+@import "~bootstrap/scss/utilities/flex";
 @import "~bootstrap/scss/utilities/float";
+@import "~bootstrap/scss/utilities/position";
+@import "~bootstrap/scss/utilities/sizing";
 @import "~bootstrap/scss/utilities/spacing";
 
-// custom style
+// Custom styles
+.cannot-select {
+  user-select: none;
+}
+
+.bg-progress {
+  background-color: $progress-bg;
+}
+
 #instrument {
   cursor: crosshair;
 }
+
+

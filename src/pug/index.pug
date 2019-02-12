@@ -1,7 +1,3 @@
-mixin link(url)
-  a(href=url target="_blank" rel="noopener noreferrer")
-    block
-
 doctype html
 html(lang="en")
   head
@@ -11,21 +7,13 @@ html(lang="en")
   body
     div.container
       h1.display-4 Theremin Demo
-        +link("https://github.com/higuma/theremin-demo")
+        a(href="https://github.com/higuma/theremin-demo" target="_blank" rel="noopener noreferrer")
           img.mt-4.float-right(src="img/GitHub-Mark-32px.png" alt="GitHub logo 32x32")
-      div.btn-toolbar(role="toolbar" aria-label="Button toolbar")
-        div.btn-group.my-1(role="group" aria-label="Start-Stop")
-          button.btn.btn-secondary#start-button Start
-        div.btn-group.ml-4.my-1#range-buttons(role="group" aria-label="Note range")
-          button.btn.btn-sm.btn-light(role="button" name="1oct") 1Oct
-          button.btn.btn-sm.btn-light(role="button" name="2oct") 2Oct
-          button.btn.btn-sm.btn-warning(role="button" name="3oct") 3Oct
-          button.btn.btn-sm.btn-light(role="button" name="4oct") 4Oct
-          button.btn.btn-sm.btn-light(role="button" name="5oct") 5Oct
-        div.btn-group.ml-2.my-1#offset-buttons(role="group" aria-label="Note offset")
-          button.btn.btn-sm.btn-light(role="button" name="c2") C2-C5
-          button.btn.btn-sm.btn-light(role="button" name="c3") C3-C6
-          button.btn.btn-sm.btn-warning(role="button" name="c4") C4-C7
-          button.btn.btn-sm.btn-light(role="button" name="c5") C5-C8
-          button.btn.btn-sm.btn-light(role="button" name="c6") C6-C9
-      canvas.img-fluid.mt-3#instrument(width="1140" height="320") This page requires HTML canvas
+      div.d-flex.flex-row.cannot-select
+        div
+          button.btn.btn-secondary#start-stop Start
+        div.d-flex.align-items-center.ml-4.mr-2 Range:
+        div.progress.w-100.h-auto#range
+          div.progress-bar.bg-progress#range-offset(style="width: 0%;")
+          div.progress-bar#range-bar(style="width: 50%;") C-C
+      canvas.img-fluid.mt-3#theremin(width="1140" height="320") This page requires HTML canvas
