@@ -8,17 +8,17 @@
   <body>
     <div class="container">
       <h1 class="display-4">Theremin Demo<a href="https://github.com/higuma/theremin-demo" target="_blank" rel="noopener noreferrer"><img class="mt-4 float-right" src="img/GitHub-Mark-32px.png" alt="GitHub logo 32x32"></a></h1>
-      <div class="d-flex flex-row cannot-select">
+      <div class="d-flex flex-row mt-3 cannot-select">
         <div>
           <button class="btn btn-secondary" id="start-stop">Start</button>
         </div>
-        <div class="d-flex align-items-center ml-4 mr-2">Range:</div>
+        <div class="d-flex align-items-center ml-4 mr-2">Range</div>
         <div class="progress w-100 h-auto" id="range">
           <div class="progress-bar bg-progress" id="range-offset" style="width: 0%;"></div>
-          <div class="progress-bar" id="range-bar" style="width: 50%;">C-C</div>
+          <div class="progress-bar" id="range-bar" style="width: 50%;"></div>
         </div>
       </div>
-      <canvas class="img-fluid mt-3" id="theremin" width="1140" height="320">This page requires HTML canvas</canvas>
+      <canvas class="img-fluid mt-4" id="theremin" width="1140" height="320">This page requires HTML canvas</canvas>
     </div>
   <script type="text/javascript" src="./js/main.js"></script></body>
 </html>
