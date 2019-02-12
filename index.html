@@ -7,28 +7,18 @@
   <link href="css/style.css" rel="stylesheet"></head>
   <body>
     <div class="container">
-      <h1 class="display-4">Theremin Demo<a href="https://github.com/higuma/theremin-demo" target="_blank" rel="noopener noreferrer"><img class="mt-4 float-right" src="img/GitHub-Mark-32px.png" alt="GitHub logo 32x32"></a>
-      </h1>
-      <div class="btn-toolbar" role="toolbar" aria-label="Button toolbar">
-        <div class="btn-group my-1" role="group" aria-label="Start-Stop">
-          <button class="btn btn-secondary" id="start-button">Start</button>
+      <h1 class="display-4">Theremin Demo<a href="https://github.com/higuma/theremin-demo" target="_blank" rel="noopener noreferrer"><img class="mt-4 float-right" src="img/GitHub-Mark-32px.png" alt="GitHub logo 32x32"></a></h1>
+      <div class="d-flex flex-row mt-3 cannot-select">
+        <div>
+          <button class="btn btn-secondary" id="start-stop">Start</button>
         </div>
-        <div class="btn-group ml-4 my-1" id="range-buttons" role="group" aria-label="Note range">
-          <button class="btn btn-sm btn-light" role="button" name="1oct">1Oct</button>
-          <button class="btn btn-sm btn-light" role="button" name="2oct">2Oct</button>
-          <button class="btn btn-sm btn-warning" role="button" name="3oct">3Oct</button>
-          <button class="btn btn-sm btn-light" role="button" name="4oct">4Oct</button>
-          <button class="btn btn-sm btn-light" role="button" name="5oct">5Oct</button>
-        </div>
-        <div class="btn-group ml-2 my-1" id="offset-buttons" role="group" aria-label="Note offset">
-          <button class="btn btn-sm btn-light" role="button" name="c2">C2-C5</button>
-          <button class="btn btn-sm btn-light" role="button" name="c3">C3-C6</button>
-          <button class="btn btn-sm btn-warning" role="button" name="c4">C4-C7</button>
-          <button class="btn btn-sm btn-light" role="button" name="c5">C5-C8</button>
-          <button class="btn btn-sm btn-light" role="button" name="c6">C6-C9</button>
+        <div class="d-flex align-items-center ml-4 mr-2">Range</div>
+        <div class="progress w-100 h-auto" id="range">
+          <div class="progress-bar bg-progress" id="range-offset" style="width: 0%;"></div>
+          <div class="progress-bar" id="range-bar" style="width: 50%;"></div>
         </div>
       </div>
-      <canvas class="img-fluid mt-3" id="instrument" width="1140" height="320">This page requires HTML canvas</canvas>
+      <canvas class="img-fluid mt-4" id="theremin" width="1140" height="320">This page requires HTML canvas</canvas>
     </div>
   <script type="text/javascript" src="./js/main.js"></script></body>
 </html>
