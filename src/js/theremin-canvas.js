@@ -1,6 +1,20 @@
 import $ from 'jquery';
 import MIDI_NOTE from './midi-note';
 
+const COLOR_BACKGROUND = '#f5f4f3',
+      TEXT_COLOR_NOTE = '#676365',
+      TEXT_COLOR_LEVEL = '#a1a1a1',
+      FONT_NOTE = '16px sans-serif',
+      FONT_LEVEL = '14px sans-serif',
+      LINE_WIDTH_C = 6,
+      LINE_WIDTH_SCALE = 3,
+      LINE_WIDTH_SEMITONE = 1,
+      LINE_WIDTH_LEVEL = 1,
+      LINE_COLOR_C = '#ffb2b2',
+      LINE_COLOR_SCALE = '#e9c5c5',
+      LINE_COLOR_SEMITONE = '#acacac',
+      LINE_COLOR_LEVEL = '#d0d0d0';
+
 // Teremin canvas
 // --------------
 class ThereminCanvas {
@@ -30,39 +44,38 @@ class ThereminCanvas {
     const W = this.width,
           H = this.height,
           ctx = this.ctx;
-    ctx.fillStyle = '#f7f7f7';
+    ctx.fillStyle = COLOR_BACKGROUND;
     ctx.fillRect(0, 0, W, H);
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = '#e3e3e3';
-    ctx.fillStyle = '#777';
-    ctx.font = '16px sans-serif';
+    ctx.fillStyle = TEXT_COLOR_NOTE;
+    ctx.font = FONT_NOTE;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
     for (let n = this.L; n <= this.H; n++) {
       const x = W * (n - this.L) / (this.H - this.L);
       ctx.beginPath();
       const note = MIDI_NOTE[n],
-            isSemitone = note.indexOf('#') != -1;
-      ctx.lineWidth = isSemitone ? 2
-                                 : (n % 12) == 0 ? 5
-                                                 : 3;
-      ctx.strokeStyle = isSemitone ? '#d5d5d5'
-                                   : (n % 12) == 0 ? '#fbb'
-                                                   : '#f0e0e0';
+            isC = n % 12 == 0,
+            isSemitone = note.indexOf('#') != -1,
+            isWide = this.H - this.L > 60;
+      ctx.lineWidth = isSemitone ? LINE_WIDTH_SEMITONE
+                                 : isC ? LINE_WIDTH_C : LINE_WIDTH_SCALE;
+      ctx.strokeStyle = isSemitone ? LINE_COLOR_SEMITONE
+                                   : isC ? LINE_COLOR_C : LINE_COLOR_SCALE;
       ctx.moveTo(x, 0);
       ctx.lineTo(x, H);
       ctx.stroke();
-      if (!isSemitone) {
+      if (!isSemitone && (isC || !isWide)) {
         ctx.fillText(note, x, 2);
       }
     }
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = '#d5d5d5';
+    ctx.lineWidth = LINE_WIDTH_LEVEL;
+    ctx.strokeStyle = LINE_COLOR_LEVEL;
+    ctx.fillStyle = TEXT_COLOR_LEVEL;
     ctx.beginPath();
     ctx.moveTo(0, 0);
     ctx.lineTo(W, 0);
     ctx.textBaseline = 'bottom';
-    ctx.font = '14px sans-serif';
+    ctx.font = FONT_LEVEL;
     for (let level of [[H/8, -36],
                        [H/4, -24],
                        [H/(2*Math.sqrt(2)), -18],
