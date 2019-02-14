@@ -1,27 +1,26 @@
-import $ from 'jquery';
-import SmoothedConst from './smoothed-const';
+import SmoothedConstant from './smoothed-constant';
 
 // Internal: frequency by MIDI note number
 const midiFreq = (note) => 440 * (2 ** ((note - 69) / 12));
 
 /***********************************************************************
-THEREMIN INSTRUMENT DIAGRAM
-===========================
+THEREMIN INSTRUMENT
+===================
 
-               Oscillator
-               +-------------+
-               |     osc     |
-               |             |
-SmoothedConst  | AudioParam  |
-+----------+   | +---------+ |    Gain
-|  detune  |---->| .detune | |    +------------+
-+----------+   | +---------+ |--->|    gain    |
-               +-------------+    |            |
-SmoothedConst                     | AudioParam |
-+----------+                      | +-------+  |    AudioDestination
-|  volume  |----------------------->| .gain |  |    +-----------------+
-+----------+                      | +-------+  |--->| ctx.destination |
-                                  +------------+    +-----------------+
+SmoothedConstant       SmoothedConstant
++-------------+        +------------+
+| this.detune |        | this.level |
++-------------+        +------------+
+       |                     |
+       |  OscillatorNode     |  GainNode
+       |  +---------------+  |  +-------------+
+       |  |   this.osc    |  |  |  this.gain  |    AudioDestination
+       |  |               |  |  |             |    +-----------------+
+       |  | AudioParam    |---->| AudioParam  |--->| ctx.destination |
+       |  | +-----------+ |  |  | +-------+   |    +-----------------+
+       +--->| .detune   | |  +--->| .gain |   |
+          | +-----------+ |     | +-------+   |
+          +---------------+     +-------------+
 
 Oscillator frequency is scaled by MIDI note and manupulated by osc.detune,
 where osc.frequency is fixed to the lowest frequency.
@@ -30,27 +29,32 @@ It is mapped to the mouse X coordinate of the theremin UI element.
 Sound volume is scaled by the quadratic function y**2,
 which is mapped to the mouse Y coordinate of the element.
 
+Works fine on Chrome 72, Firefox 65, and Opera 58.
 ***********************************************************************/
+const SMOOTHING_TIME_DETUNE = 0.05,
+      SMOOTHING_TIME_LEVEL = 0.02;
 
 // Theremin instrument
 // -------------------
 class Theremin {
-  constructor(noteL, noteH) {
-    const ctx = new (window.AudioContext || window.webkitAudioContext);
+  constructor(ctx, noteL, noteH) {
     this.osc = ctx.createOscillator();
     this.gain = ctx.createGain();
     this.gain.gain.value = 0;
-    this.detune = new SmoothedConst(ctx, 0.05);
-    this.detune.node.connect(this.osc.detune);
-    this.level = new SmoothedConst(ctx, 0.02);
-    this.level.node.connect(this.gain.gain);
+    this.detune = new SmoothedConstant(ctx, SMOOTHING_TIME_DETUNE);
+    this.detune.connect(this.osc.detune);
+    this.level = new SmoothedConstant(ctx, SMOOTHING_TIME_LEVEL);
+    this.level.connect(this.gain.gain);
     this.osc.connect(this.gain);
     this.gain.connect(ctx.destination);
 
-    this.x = 0;        // 0..1
-    this.y = 0;        // 0..1
     this.L = noteL;
     this.H = noteH;
+    this.x = 0;        // 0..1
+    this.y = 0;        // 0..1
+
+    this.updateX();
+    this.updateY();
     this.updateFrequency();
     this.osc.start();
   }

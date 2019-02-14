@@ -1,12 +1,16 @@
 import $ from 'jquery';
 import Theremin from './theremin';
+import ThereminForEdge from './theremin-for-edge';
 
 class ThereminUI {
   constructor(selector, noteL, noteH) {
     this.$element = $(selector);
     this.element = this.$element[0];
     this.$element.on('mousemove', (event) => this.mouseMove(event));
-    this.instrument = new Theremin(noteL, noteH);
+    const ua = window.navigator.userAgent.toLowerCase(),
+          theremin = ua.indexOf('edge') != -1 ? ThereminForEdge : Theremin;
+    const ctx = new (window.AudioContext || window.webkitAudioContext);
+    this.instrument = new theremin(ctx, noteL, noteH);
     this.isMuted = true;
   }
 

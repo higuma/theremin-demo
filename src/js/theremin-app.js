@@ -20,7 +20,7 @@ class ThereminApp {
   }
 
   // getter/setter
-  get rangeL() {        // read/write
+  get rangeL() {        // read from rangeBar
     return this.rangeBar.rangeL;
   }
 
@@ -31,7 +31,7 @@ class ThereminApp {
     }
   }
 
-  get rangeH() {        // read/write
+  get rangeH() {        // read from rangeBar
     return this.rangeBar.rangeH;
   }
 
@@ -44,6 +44,8 @@ class ThereminApp {
 
   set running(run) {    // write only - from start/stop button
     if (!this.ui) {
+      // create on the first click
+      // (Web audio API requires creating audio objects on user operation)
       this.ui = new ThereminUI(SEL_CANVAS, this.rangeL, this.rangeH);
     }
     this.ui.muted = !run;
