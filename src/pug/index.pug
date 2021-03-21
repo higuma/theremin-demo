@@ -6,7 +6,12 @@ html(lang="en")
     title Theremin Demo
   body
     div.container
-      h1.display-4 Theremin Demo
+      div.d-flex.flex-row.justify-content-between
+        h1.display-4 Theremin Demo
+        div.custom-control.custom-switch.mt-4
+          span.mr-5 Level control
+          input.custom-control-input#level-control(type="checkbox")
+          label.custom-control-label.text-info#level-control-label(for="level-control") Top to bottom (↓)
         a(href="https://github.com/higuma/theremin-demo" target="_blank" rel="noopener noreferrer")
           img.mt-4.float-right(src="img/GitHub-Mark-32px.png" alt="GitHub logo 32x32")
       div.d-flex.flex-row.mt-3.cannot-select

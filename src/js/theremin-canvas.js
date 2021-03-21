@@ -5,7 +5,7 @@ const COLOR_BACKGROUND = '#f5f4f3',
       TEXT_COLOR_NOTE = '#676365',
       TEXT_COLOR_LEVEL = '#a1a1a1',
       FONT_NOTE = '16px sans-serif',
-      FONT_LEVEL = '14px sans-serif',
+      FONT_LEVEL = '12px sans-serif',
       LINE_WIDTH_C = 6,
       LINE_WIDTH_SCALE = 3,
       LINE_WIDTH_SEMITONE = 1,
@@ -25,17 +25,23 @@ class ThereminCanvas {
     this.ctx = canvas.getContext('2d');
     this.L = noteL;
     this.H = noteH;
+    this.b2t = false;
     this.draw();
   }
 
   // setter
-  set rangeL(note) {    // write only
+  set rangeL(note) {        // write only
     this.L = note;
     this.draw();
   }
 
-  set rangeH(note) {    // write only
+  set rangeH(note) {        // write only
     this.H = note;
+    this.draw();
+  }
+
+  set bottomToTop(b2t) {    // write only
+    this.b2t = b2t;
     this.draw();
   }
 
@@ -74,14 +80,22 @@ class ThereminCanvas {
     ctx.beginPath();
     ctx.moveTo(0, 0);
     ctx.lineTo(W, 0);
-    ctx.textBaseline = 'bottom';
+    ctx.textBaseline = this.b2t ? 'top' : 'bottom';
     ctx.font = FONT_LEVEL;
-    for (let level of [[H/8, -36],
-                       [H/4, -24],
-                       [H/(2*Math.sqrt(2)), -18],
-                       [H/2, -12],
-                       [H/Math.sqrt(2), -6],
-                       [H-1, 0]]) {
+    const level_display = this.b2t
+      ? [[H*7/8, -36],
+         [H*3/4, -24],
+         [H*(1-Math.sqrt(2)/4), -18],
+         [H/2, -12],
+         [H*(1-1/Math.sqrt(2)), -6],
+         [0, 0]]
+      : [[H-1, 0],
+         [H/Math.sqrt(2), -6],
+         [H/2, -12],
+         [H/(2*Math.sqrt(2)), -18],
+         [H/4, -24],
+         [H/8, -36]];
+    for (let level of level_display) {
       const h = level[0];
       ctx.moveTo(0, h);
       ctx.lineTo(W, h);

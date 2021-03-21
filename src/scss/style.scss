@@ -14,12 +14,14 @@ $enable-transitions: false;
 @import "~bootstrap/scss/buttons";
 @import "~bootstrap/scss/images";
 @import "~bootstrap/scss/progress";
+@import "~bootstrap/scss/custom-forms";
 @import "~bootstrap/scss/utilities/display";
 @import "~bootstrap/scss/utilities/flex";
 @import "~bootstrap/scss/utilities/float";
 @import "~bootstrap/scss/utilities/position";
 @import "~bootstrap/scss/utilities/sizing";
 @import "~bootstrap/scss/utilities/spacing";
+@import "~bootstrap/scss/utilities/text";
 
 // Custom styles
 .cannot-select {

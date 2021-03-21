@@ -1,9 +1,12 @@
+import LevelControl from './level-control';
 import StartStopButton from './start-stop-button';
 import RangeBar from './range-bar';
 import ThereminCanvas from './theremin-canvas';
 import ThereminUI from './theremin-ui';
 
-const SEL_START_STOP = '#start-stop',
+const SEL_LEVEL_CONTROL = '#level-control',
+      SEL_LEVEL_CONTROL_LABEL = '#level-control-label',
+      SEL_START_STOP = '#start-stop',
       SEL_RANGE = '#range',
       SEL_OFFSET = '#range-offset',
       SEL_BAR = '#range-bar',
@@ -11,6 +14,7 @@ const SEL_START_STOP = '#start-stop',
 
 class ThereminApp {
   constructor() {
+    this.levelControl = new LevelControl(SEL_LEVEL_CONTROL, SEL_LEVEL_CONTROL_LABEL, this);
     this.startStop = new StartStopButton(SEL_START_STOP, this);
     this.rangeBar = new RangeBar(SEL_RANGE, SEL_OFFSET, SEL_BAR, this);
     const rangeL = this.rangeBar.rangeL,
@@ -39,6 +43,13 @@ class ThereminApp {
     this.canvas.rangeH = note;
     if (this.ui) {
       this.ui.rangeH = note;
+    }
+  }
+
+  set bottomToTop(b) {  // write only - from level control switch
+    this.canvas.bottomToTop = b;
+    if (this.ui) {
+      this.ui.bottomToTop = b;
     }
   }
 

@@ -12,6 +12,7 @@ class ThereminUI {
     const ctx = new (window.AudioContext || window.webkitAudioContext);
     this.instrument = new theremin(ctx, noteL, noteH);
     this.isMuted = true;
+    this.b2t = false;
   }
 
   // setter (write only)
@@ -30,12 +31,18 @@ class ThereminUI {
     }
   }
 
+  set bottomToTop(b2t) {
+    this.b2t = b2t;
+  }
+
   // internal
   mouseMove(event) {
     if (!this.isMuted) {
       const r = this.element.getBoundingClientRect();
       this.instrument.X = (event.clientX - r.left) / this.element.clientWidth;
-      this.instrument.Y = (event.clientY - r.top) / this.element.clientHeight;
+      this.instrument.Y = this.b2t
+        ? (r.bottom - event.clientY) / this.element.clientHeight
+        : (event.clientY - r.top) / this.element.clientHeight;
     }
   }
 }

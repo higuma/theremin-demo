@@ -36,10 +36,18 @@ module.exports = {
             options: { sourceMap: true, importLoaders: 2  /*postcss+sass*/ }
           },
           { loader: 'postcss-loader',
-            options: { sourceMap: true, plugins: [require('autoprefixer')] }
+            options: {
+              sourceMap: true,
+              postcssOptions: {
+                plugins: [ ['autoprefixer', {/*options*/}] ]
+              }
+            }
           },
           { loader: 'sass-loader',
-            options: { sourceMap: true, outputStyle: 'expanded' }
+            options: {
+              sourceMap: true,
+              sassOptions: { outputStyle: 'expanded' }
+            }
           }
         ]
       }
@@ -54,7 +62,9 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: 'css/style.css'
     }),
-    new CopyWebpackPlugin([{ from: 'src/img', to:'img' }])
+    new CopyWebpackPlugin({
+      patterns: [{ from: 'src/img', to:'img' }]
+    })
   ],
 
   devServer: {
